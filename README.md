@@ -22,6 +22,11 @@ python3 duplicates.py /home/comp/devman
  Path: /home/comp/devman/3_bars/.git/hooks/commit-msg.sample  Size: 896
 ```
 
+### Get help
+```bash
+python3 duplicates.py --help
+```
+
 ### Requirements
 ```bash
 Python ver 3.5 (or higher)

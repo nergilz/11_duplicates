@@ -22,21 +22,18 @@ def get_duplicates(files_size_and_path):
     for name_size_file, paths_file in files_size_and_path.items():
         if len(paths_file) > 1:
             for path in paths_file:
-                path = '{0}{1}'.format(path, '/')
                 duplicates_files.setdefault(name_size_file, []).append(path)
     return duplicates_files
 
 
 def pprint_duplicates(duplicates_files):
 
-    for name_size_file, paths in duplicates_files.items():
-        for path in paths:
-            print(' Path: {0}{1}  Size: {2}'.format(
-                path,
-                name_size_file[0],
-                name_size_file[1]
-                )
-            )
+    for name_size_file, paths_file in duplicates_files.items():
+        for path in paths_file:
+            name = name_size_file[0]
+            size = name_size_file[1]
+            path_file = os.path.join(path, name)
+            print(' PATH: {0}  SIZE: {1}'.format(path_file, size))
 
 
 def get_parser_args():

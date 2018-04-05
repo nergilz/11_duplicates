@@ -30,10 +30,10 @@ def pprint_duplicates(duplicates_files):
 
     for name_size_file, paths_file in duplicates_files.items():
         for path in paths_file:
-            name = name_size_file[0]
-            size = name_size_file[1]
-            path_file = os.path.join(path, name)
-            print(' PATH: {0}  SIZE: {1}'.format(path_file, size))
+            name_file = name_size_file[0]
+            size_file = name_size_file[1]
+            path_file = os.path.join(path, name_file)
+            print(' PATH: {0}  SIZE: {1}'.format(path_file, size_file))
 
 
 def get_parser_args():

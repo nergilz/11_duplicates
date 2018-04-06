@@ -20,13 +20,10 @@ def get_size_path_files(path):
 def get_duplicates(size_and_path_for_files):
     duplicate_files = {}
 
-    for (name_file, size_file), paths_files in size_and_path_for_files.items():
+    for name_size_file, paths_files in size_and_path_for_files.items():
         if len(paths_files) > 1:
             for path_file in paths_files:
-                duplicate_files.setdefault(
-                    (name_file, size_file),
-                    []
-                ).append(path_file)
+                duplicate_files.setdefault(name_size_file, []).append(path_file)
 
     return duplicate_files
 

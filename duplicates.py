@@ -2,36 +2,35 @@ import os
 import argparse
 
 
-def get_size_paths_files(path):
-    name_size_paths_for_files = {}
+def get_files_size_paths(path):
+    files_name_size_paths = {}
 
     for dir_path, dir_names, files_names in os.walk(path):
         for file_name in files_names:
             file_path = os.path.join(dir_path, file_name)
             file_size = os.path.getsize(file_path)
-            name_size_paths_for_files.setdefault(
+            files_name_size_paths.setdefault(
                 (file_name, file_size),
                 []
             ).append(file_path)
 
-    return name_size_paths_for_files
+    return files_name_size_paths
 
 
-def get_duplicates(size_and_paths_for_files):
-    duplicate_files = {}
+def get_duplicates(files_name_size_paths):
 
-    for name_size_file, paths_files in size_and_paths_for_files.items():
-        if len(paths_files) > 1:
-            duplicate_files.setdefault(name_size_file, paths_files)
-
-    return duplicate_files
+    return {
+        name_size: file_paths
+        for name_size, file_paths in files_name_size_paths.items()
+        if len(file_paths) > 1
+    }
 
 
 def pprint_duplicate(duplicate_files):
 
-    for (name_file, size_file), paths_files in duplicate_files.items():
-        for path_file in paths_files:
-            print(' PATH: {0}  SIZE: {1}'.format(path_file, size_file))
+    for (file_name, file_size), files_paths in duplicate_files.items():
+        for file_path in files_paths:
+            print(' PATH: {0}  SIZE: {1}'.format(file_path, file_size))
 
 
 def get_parser_args():
@@ -49,8 +48,8 @@ if __name__ == '__main__':
     arguments = get_parser_args()
 
     if os.path.isdir(arguments.path):
-        name_size_paths_for_files = get_size_paths_files(arguments.path)
-        duplicate_files = get_duplicates(name_size_paths_for_files)
+        files_name_size_paths = get_files_size_paths(arguments.path)
+        duplicate_files = get_duplicates(files_name_size_paths)
         pprint_duplicate(duplicate_files)
     else:
         print(' ERROR: this is a file or directory not found!')
